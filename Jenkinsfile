@@ -5,7 +5,7 @@ pipeline{
     }
     
     stages{
-        stage('SCM'){
+        stage('CDOWNLOAD'){
             steps{
                 git credentialsId: 'Github_Token', 
                     url: 'https://github.com/AndrewBanin/spring-petclinic.git'
