@@ -20,7 +20,7 @@ pipeline{
         }
         stage('Building Jar'){
             steps{
-                archiveArtifacts artifacts: '/target/*.jar', followSymlinks: false  
+                archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false  
             }
         }
 
