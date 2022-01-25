@@ -18,7 +18,11 @@ pipeline{
                 sh "mvn clean package"
             }
         }
+        stage('Building Jar'){
+            steps{
+                sh '/root/.jenkins/workspace/second_Project_add-jenkinsfile/target/spring-petclinic-2.3.1.BUILD-SNAPSHOT.jar'
+            }
+        }
+
     }
 }
-
-
