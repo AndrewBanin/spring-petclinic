@@ -20,7 +20,8 @@ pipeline{
         }
         stage('Building Jar'){
             steps{
-                sh "spring-petclinic-2.3.1.BUILD-SNAPSHOT.jar"
+                environment {
+  building jar = "/root/.jenkins/workspace/second_Project_add-jenkinsfile/target/spring-petclinic-2.3.1.BUILD-SNAPSHOT.jar"
             }
         }
 
