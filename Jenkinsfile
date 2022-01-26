@@ -12,7 +12,7 @@ pipeline{
         stage('Zip and Publish artifacts') {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
-                archiveArtifacts artifacts: 'target.zip', followSymlinks: false
+                archiveArtifacts artifacts: '*.zip', followSymlinks: false
             }
         }
     }
