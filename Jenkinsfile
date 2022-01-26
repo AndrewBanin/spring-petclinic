@@ -11,10 +11,7 @@ pipeline{
         }
         stage('Zip and Publish artifacts') {
             steps {
-                sh 'mkdir archive'
-                sh 'echo target > archive/target.txt'
-                zip zipFile: 'target.zip', archive: false, dir: 'archive'
-                archiveArtifacts artifacts: 'target.zip', fingerprint: true
+                archiveArtifacts artifacts: 'spring-petclinic-2.3.1.BUILD-SNAPSHOT.zip.jar', followSymlinks: false
                 archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
             }
         }
