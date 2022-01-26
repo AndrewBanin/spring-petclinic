@@ -11,7 +11,7 @@ pipeline{
         }
         stage('Zip and Publish artifacts') {
             steps {
-                archiveArtifacts artifacts: 'BUILD-SNAPSHOT.zip', followSymlinks: false
+                zip zipFile: 'BUILD-SNAPSHOT.zip', archive: true, dir: 'archive'
                 archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
             }
         }
