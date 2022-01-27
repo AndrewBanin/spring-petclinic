@@ -11,10 +11,10 @@ pipeline{
         }
         stage('Ziping build artifacts') {
             steps {
-                sh 'mkdir spring-petclinic'
-                sh 'cp -r target/*jar spring-petclinic'
+                sh 'mkdir petclinic'
+                sh 'cp -r target/*jar petclinic'
                 script{
-                    zip zipFile: 'spring-petclinic.zip', archive: false, dir: 'spring-petclinic'
+                    zip zipFile: 'spring-petclinic.zip', archive: false, dir: 'petclinic'
                 }
             }
         }
