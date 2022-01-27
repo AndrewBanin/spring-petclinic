@@ -10,8 +10,7 @@ pipeline{
             }
         }
         stage('Zip and Publish artifacts') {
-            steps {
-                sh "{spring-petclinic-2.3.1.BUILD-SNAPSHOT.zip}" 
+            steps { 
                 archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
             }
         }
