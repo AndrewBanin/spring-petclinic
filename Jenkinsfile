@@ -14,13 +14,13 @@ pipeline{
                 sh 'mkdir petclinic'
                 sh 'cp -r target/*jar petclinic'
                 script{
-                    zip zipFile: 'spring-petclinic.zip', archive: false, dir: 'petclinic'
+                    zip zipFile: 'petclinic.zip', archive: false, dir: 'petclinic'
                 }
             }
         }
         stage('publishing build artifact'){
             steps{
-                 archiveArtifacts artifacts: 'spring-petclinic.zip', fingerprint: true
+                 archiveArtifacts artifacts: 'petclinic.zip', fingerprint: true
                 //archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
             }
         }
