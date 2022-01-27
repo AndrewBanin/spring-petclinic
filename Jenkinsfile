@@ -10,8 +10,12 @@ pipeline{
             }
         }
         stage('Zip and Publish artifacts') {
-            steps { 
-                archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+            steps {
+                sh 'mkdir spring-petclinic'
+                sh 'cp -r target/*jar spring-petclinic'
+                zip zipFile: 'spring-petclinic.zip', archive: false, dir: 'spring-petclinic'
+                archiveArtifacts artifacts: 'spring-petclinic.zip', fingerprint: true
+                //archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
             }
         }
     }
