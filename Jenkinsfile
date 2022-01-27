@@ -16,7 +16,10 @@ pipeline{
                 script{
                     zip zipFile: 'spring-petclinic.zip', archive: false, dir: 'spring-petclinic'
                 }
-                archiveArtifacts artifacts: 'spring-petclinic.zip', fingerprint: true
+               
+            }
+            steps{
+                 archiveArtifacts artifacts: 'spring-petclinic.zip', fingerprint: true
                 //archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
             }
         }
