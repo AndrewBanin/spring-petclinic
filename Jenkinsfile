@@ -5,20 +5,22 @@ pipeline{
     }
     
     stages{
-        stage('CONTINOUSDOWNLOAD'){
-            steps{
-                git credentialsId: 'Github_Token', 
-                    url: 'https://github.com/AndrewBanin/spring-petclinic.git'
-            }
-            
-        }
-        
         stage('Maven Build'){
             steps{
                 sh "mvn clean package"
             }
+            
+        }
+        
+        stage('Build Docker Image'){
+            steps{
+                 script {
+                  app = docker.build("spring-petclinic:${env.BUILD_ID}" )
+                  app.inside {
+                      sh 'builing petclinic'
+                  }
+                }
+            }
         }
     }
 }
-
-
