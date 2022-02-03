@@ -16,9 +16,6 @@ pipeline{
             steps{
                  script {
                   app = docker.build("spring-petclinic:${env.BUILD_ID}" )
-                  app.inside {
-                      sh 'builing petclinic'
-                  }
                 }
             }
         }
