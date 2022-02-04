@@ -4,8 +4,8 @@ pipeline{
       maven 'Maven'
     }
     environment {
-      DOCKER_TAG = getVersion()
-    }
+		DOCKERHUB_CREDENTIALS=credentials('docker-jenkins-connect')
+	}
     stages{
         stage('Maven Build'){
             steps{
@@ -13,24 +13,33 @@ pipeline{
             }
             
         }
-        
-        stage('Docker Build'){
-            steps{
-                sh "docker build . -t banina/spring-clinic:${DOCKER_TAG}"
-                
-            }
-            
-        }
-        stage('Docker Push'){
-            steps{
-                sh "docker login -u banina -p password"
-                sh "docker push banina/spring-clinic:${DOCKER_TAG}"    
-            }
-            
-        }
-    }  
+
+		stage('Build') {
+
+			steps {
+				sh 'docker build -t banina/spring-clinic:latest .'
+			}
+		}
+
+		stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'docker push  banina/spring-clinic:latest'
+			}
+		}
+	}
+
+	post {
+		always {
+			sh 'docker logout'
+		}
+	}
+
 }
-def getVersion(){
-    def commitHash = sh returnStdout: true, script: 'git rev-parse -- short HEAD'
-    return commitHash
- }   
