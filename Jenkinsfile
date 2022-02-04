@@ -3,7 +3,9 @@ pipeline{
     tools {
       maven 'Maven'
     }
-    
+    environment {
+      DOCKER_TAG = getVersion()
+    }
     stages{
         stage('Maven Build'){
             steps{
@@ -12,12 +14,23 @@ pipeline{
             
         }
         
-        stage('Build Docker Image'){
+        stage('Docker Build'){
             steps{
-                 script {
-                  app = docker.build("spring-petclinic:${env.BUILD_ID}" )
-                }
+                sh "docker build . -t banina/AndrewBanin:${DOCKER_TAG}"
+                
             }
+            
         }
-    }
+        stage('Docker Push'){
+            steps{
+                sh "docker login -u banina -p password"
+                sh "docker push banina/AndrewBanin:${DOCKER_TAG}"    
+            }
+            
+        }
+    }  
 }
+def getVersion(){
+    def commitHash = sh returnStdout: true, script: 'git rev-parse -- short HEAD'
+    return commitHash
+ }   
