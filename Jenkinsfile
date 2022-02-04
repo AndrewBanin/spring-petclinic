@@ -5,6 +5,7 @@ pipeline{
     }
     environment {
 		DOCKERHUB_CREDENTIALS=credentials('docker-jenkins-connect')
+        DOCKERUSER=banina
 	}
     stages{
         stage('Maven Build'){
@@ -14,14 +15,14 @@ pipeline{
             
         }
 
-		stage('Build') {
+		stage('Docker Build Petclinic') {
 
 			steps {
-				sh 'docker build -t banina/spring-clinic:latest .'
+				sh 'docker build -t $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev .'
 			}
 		}
 
-		stage('Login') {
+		stage('Login to Docker HUB') {
 
 			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
@@ -31,7 +32,7 @@ pipeline{
 		stage('Push') {
 
 			steps {
-				sh 'docker push  banina/spring-clinic:latest'
+				sh 'docker push  $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev'
 			}
 		}
 	}
