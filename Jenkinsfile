@@ -16,7 +16,7 @@ pipeline{
         }
 
 		stage('Docker Build Petclinic') {
-
+            
 			steps {
 				sh 'docker build -t $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev .'
 			}
@@ -35,6 +35,11 @@ pipeline{
 				sh 'docker push  $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev'
 			}
 		}
+        stage('Cleanup') {
+            steps{
+                sh "docker rmi $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev"
+            }
+        }
 	}
 
 	post {
