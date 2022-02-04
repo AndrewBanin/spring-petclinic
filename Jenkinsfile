@@ -8,6 +8,11 @@ pipeline{
         DOCKERUSER="banina"
 	}
     stages{
+        stage('CleanWorkSpace'){
+            steps {
+                cleanWs()
+            }
+        }
         stage('Maven Build'){
             steps{
                 sh "mvn clean package"
@@ -16,7 +21,7 @@ pipeline{
         }
 
 		stage('Docker Build Petclinic') {
-            
+
 			steps {
 				sh 'docker build -t $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev .'
 			}
