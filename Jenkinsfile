@@ -4,7 +4,7 @@ pipeline{
       maven 'Maven'
     }
     environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub_token')
+		DOCKERHUB_CREDENTIALS=credentials('docker-jenkins-connect')
         DOCKERUSER="banina"
 	}
     stages{
