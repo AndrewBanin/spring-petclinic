@@ -4,15 +4,10 @@ pipeline{
       maven 'Maven'
     }
     environment {
-		DOCKERHUB_CREDENTIALS=credentials('docker-jenkins-connect')
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub_token')
         DOCKERUSER="banina"
 	}
     stages{
-        stage('CleanWorkSpace'){
-            steps {
-                cleanWs()
-            }
-        }
         stage('Maven Build'){
             steps{
                 sh "mvn clean package"
@@ -45,6 +40,11 @@ pipeline{
                 sh "docker rmi $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev"
             }
         }
+        stage('CleanWorkSpace'){
+            steps {
+                cleanWs()
+            }
+        }
 	}
 
 	post {
@@ -54,3 +54,4 @@ pipeline{
 	}
 
 }
+
