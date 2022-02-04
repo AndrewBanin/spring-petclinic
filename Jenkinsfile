@@ -16,7 +16,7 @@ pipeline{
         
         stage('Docker Build'){
             steps{
-                sh "docker build . -t banina/AndrewBanin:${DOCKER_TAG}"
+                sh "docker build . -t banina/andrewbanin:${DOCKER_TAG}"
                 
             }
             
@@ -24,7 +24,7 @@ pipeline{
         stage('Docker Push'){
             steps{
                 sh "docker login -u banina -p password"
-                sh "docker push banina/AndrewBanin:${DOCKER_TAG}"    
+                sh "docker push banina/andrewbanin:${DOCKER_TAG}"    
             }
             
         }
