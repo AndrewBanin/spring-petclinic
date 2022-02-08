@@ -24,7 +24,7 @@ pipeline{
 		stage('Docker Build Petclinic') {
 
 			steps {
-				sh 'docker build -t $DOCKERUSER/spring-petclinic:${BUILD_NUMBER}-dev .'
+				sh 'docker build -t $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev .'
 			}
 		}
 
