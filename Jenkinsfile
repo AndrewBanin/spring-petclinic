@@ -8,13 +8,6 @@ pipeline{
         DOCKERUSER="banina"
 	}
     stages{
-        stage('git checkout'){
-            steps{
-                git credentialsId: 'Github_Token', 
-                    url: 'https://github.com/AndrewBanin/spring-petclinic.git'
-            }
-            
-        }
         stage('Maven Build'){
             steps{
                 sh "mvn clean package"
@@ -27,7 +20,6 @@ pipeline{
 				sh 'docker build -t $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev .'
 			}
 		}
-
 		stage('Login to Docker HUB') {
 
 			steps {
@@ -52,7 +44,6 @@ pipeline{
             }
         }
 	}
-
 	post {
 		always {
 			sh 'docker logout'
