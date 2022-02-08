@@ -14,6 +14,12 @@ pipeline{
             }
             
         }
+        stage('git checkout'){
+            steps{
+                git credentialsId: 'Github_Token', 
+                    url: 'https://github.com/AndrewBanin/spring-petclinic.git'
+            }  
+        }
 		stage('Docker Build Petclinic') {
 
 			steps {
