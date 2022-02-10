@@ -13,12 +13,6 @@ pipeline{
                 sh "mvn clean package"
             } 
         }
-        stage('git checkout'){
-            steps{
-                git credentialsId: 'jenkins-github', 
-                    url: 'https://github.com/AndrewBanin/spring-petclinic.git'
-            }  
-        }
 		stage('Docker Build Petclinic') {
 
 			steps {
