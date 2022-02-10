@@ -11,19 +11,18 @@ pipeline{
         stage('Maven Build'){
             steps{
                 sh "mvn clean package"
-            }
-            
+            } 
         }
         stage('git checkout'){
             steps{
-                git credentialsId: 'Github_Token', 
+                git credentialsId: 'jenkins-github', 
                     url: 'https://github.com/AndrewBanin/spring-petclinic.git'
             }  
         }
 		stage('Docker Build Petclinic') {
 
 			steps {
-				sh 'docker build -t $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev .'
+				sh 'docker build -t $DOCKERUSER/spring-petclinic:${BUILD_NUMBER}-dev .'
 			}
 		}
 		stage('Login to Docker HUB') {
@@ -36,12 +35,12 @@ pipeline{
 		stage('Push') {
 
 			steps {
-				sh 'docker push  $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev'
+				sh 'docker push  $DOCKERUSER/spring-petclinic:${BUILD_NUMBER}-dev'
 			}
 		}
         stage('Cleanup') {
             steps{
-                sh "docker rmi $DOCKERUSER/spring-clinic:${BUILD_NUMBER}-dev"
+                sh "docker rmi $DOCKERUSER/spring-petclinic:${BUILD_NUMBER}-dev"
             }
         }
         stage('CleanWorkSpace'){
