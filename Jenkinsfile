@@ -6,6 +6,9 @@ pipeline{
     environment {
 		DOCKERHUB_CREDENTIALS=credentials('docker-jenkins-connect')
         DOCKERUSER="banina"
+	    AWS_ACCESS_KEY_ID     = credentials('jenskin-aws-access-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenskins-aws-secret-access-key-id')
+        AWS_DEFAULT_REGION = ('us-east-1')	
 	}
     stages{
         stage('Maven Build'){
@@ -30,6 +33,11 @@ pipeline{
 
 			steps {
 				sh 'docker push  $DOCKERUSER/spring-petclinic:${BUILD_NUMBER}-dev'
+			}
+		}
+		stage('cloudformation') {
+			steps{
+				sh"aws cloudformation create-stack --stack-name spring-petclinic-${BUILD_NUMBER} --template-body file://add-infrastructure1.yml --region 'us-east-1' --parameters ParameterKey=KeyName,ParameterValue=cloudformation"
 			}
 		}
         stage('Cleanup') {
