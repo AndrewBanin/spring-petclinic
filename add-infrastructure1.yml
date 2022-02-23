@@ -73,4 +73,5 @@ Outputs:
     Value: !GetAtt 
       - Dockerhost
       - PublicIp
+
       
