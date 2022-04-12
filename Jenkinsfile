@@ -40,7 +40,7 @@ pipeline{
 				sh"aws cloudformation create-stack --stack-name spring-petclinic-${BUILD_NUMBER} --template-body file://add-infrastructure1.yml --region 'us-east-1' --parameters ParameterKey=KeyName,ParameterValue=cloudformation ParameterKey=ServerName,ParameterValue=spring-petclinic-${BUILD_NUMBER}"
 			}
 		}
-		stage('WaktingforInstancetoComeup'){
+		stage('WaitingforInstancetoComeup'){
 			steps{
 				sh"sleep 2m"
 			}
@@ -68,3 +68,5 @@ pipeline{
 		}
 	}
 }
+
+
