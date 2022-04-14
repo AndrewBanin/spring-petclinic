@@ -6,6 +6,9 @@ pipeline{
     environment {
 		DOCKERHUB_CREDENTIALS=credentials('docker-jenkins-connect')
         DOCKERUSER="banina"
+	    AWS_ACCESS_KEY_ID=credentials('aws-access-key')
+        AWS_SECRET_ACCESS_KEY=credentials('aws-secret-key')
+        AWS_DEFAULT_REGION=('us-east-1')	
 	}
     stages{
         stage('Maven Build'){
@@ -32,6 +35,22 @@ pipeline{
 				sh 'docker push  $DOCKERUSER/spring-petclinic:${BUILD_NUMBER}-dev'
 			}
 		}
+		stage('cloudformation') {
+			steps{
+				sh"aws cloudformation create-stack --stack-name spring-petclinic-${BUILD_NUMBER} --template-body file://add-infrastructure1.yml --region 'us-east-1' --parameters ParameterKey=KeyName,ParameterValue=cloudformation ParameterKey=ServerName,ParameterValue=spring-petclinic-${BUILD_NUMBER}"
+			}
+		}
+		stage('WaitingforInstancetoComeup'){
+			steps{
+				sh"sleep 2m"
+			}
+		}
+		stage('GetInstanceIP') {
+            steps{
+                springIP = $(sh "aws ec2 describe-instances --filters Name=tag:Name,Values='spring-petclinic-${BUILD_NUMBER}' --query 'Reservations[].Instances[].PublicIpAddress' --output text")
+                sh "echo ${springIP}"
+            }
+        }
         stage('Cleanup') {
             steps{
                 sh "docker rmi $DOCKERUSER/spring-petclinic:${BUILD_NUMBER}-dev"
@@ -48,5 +67,9 @@ pipeline{
 			sh 'docker logout'
 		}
 	}
-
 }
+
+
+
+
+
