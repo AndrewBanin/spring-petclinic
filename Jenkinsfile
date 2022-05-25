@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment {
-		DOCKERHUB_CREDENTIALS=credentials('docker-jenkins-connect')
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub-token')
         DOCKERUSER="banina"	
 	}
     stages{
