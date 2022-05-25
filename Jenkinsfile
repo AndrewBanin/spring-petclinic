@@ -1,8 +1,5 @@
 pipeline{
     agent any
-    tools {
-      maven 'Maven'
-    }
     environment {
 		DOCKERHUB_CREDENTIALS=credentials('docker-jenkins-connect')
         DOCKERUSER="banina"	
