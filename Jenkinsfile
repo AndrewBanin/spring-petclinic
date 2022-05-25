@@ -6,8 +6,8 @@ pipeline{
     environment {
 		DOCKERHUB_CREDENTIALS=credentials('docker-jenkins-connect')
         DOCKERUSER="banina"
-	    AWS_ACCESS_KEY_ID=credentials('aws-access-key')
-        AWS_SECRET_ACCESS_KEY=credentials('aws-secret-key')
+	    AWS_ACCESS_KEY_ID=credentials('Jenkins-Aws-Access')
+        AWS_SECRET_ACCESS_KEY=credentials('Jenkins-Aws-Access')
         AWS_DEFAULT_REGION=('us-east-1')	
 	}
     stages{
@@ -68,8 +68,3 @@ pipeline{
 		}
 	}
 }
-
-
-
-
-
