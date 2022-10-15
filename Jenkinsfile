@@ -19,7 +19,7 @@ pipeline{
 		stage('Docker Build Petclinic') {
 
 			steps {
-				sh 'docker build -t $DOCKERUSER/petclinic:${BUILD_NUMBER}-dev .'
+				sh 'docker build -t $DOCKERUSER/spring-petclinic:${BUILD_NUMBER}-dev .'
 			}
 		}
 		stage('Login to Docker HUB') {
@@ -55,7 +55,7 @@ pipeline{
 	post {
 		always {
 			sh 'docker logout'
-			sh 'docker rmi $DOCKERUSER/petclinic:${BUILD_NUMBER}-dev'
+			sh 'docker rmi $DOCKERUSER/spring-petclinic:${BUILD_NUMBER}-dev'
 			cleanWs()
 		}
 	}	
