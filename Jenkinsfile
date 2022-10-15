@@ -4,7 +4,7 @@ pipeline{
       maven 'maven'
     }
     environment {
-		DOCKERHUB_CREDENTIALS=credentials('Jenkins_Docker_token')
+		DOCKERHUB_CREDENTIALS=credentials('Jenkins_Docker-token')
         DOCKERUSER="banina"
 	    // AWS_ACCESS_KEY_ID=credentials('aws-access-id')
         // AWS_SECRET_ACCESS_KEY=credentials('aws-secret-id')
@@ -32,7 +32,7 @@ pipeline{
 		stage('Push Docker Image to Container Registry') {
 
 			steps {
-				sh 'docker push  $DOCKERUSER/petclinic:${BUILD_NUMBER}-dev'
+				sh 'docker push  $DOCKERUSER/spring-petclinic:${BUILD_NUMBER}-dev'
 			}
 		}
 		// stage('cloudformation') {
